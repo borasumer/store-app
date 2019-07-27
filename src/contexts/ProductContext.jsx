@@ -14,13 +14,27 @@ const ProductContextProvider = (props) => {
     tempProducts = [...tempProducts, singleItem];
     //console.log('rendered')
   });
-
+  //! addCart Func
+  const addCart = (id) => {
+    console.log(id)
+  }
+  //! getItem Func - called in the handleDetails Func
+  const getItem = (id) => {
+    const product = products.find(item => item.id === id);
+    return product;
+  }
+  //! handleDetails Func
+  const handleDetails = (id) => {
+    const product = getItem(id);
+    setDetails(product);
+    //console.log(product);
+  }
   useEffect(() => {
     setProducts(tempProducts);
   }, []);
 
   return (
-    <ProductContext.Provider value={{ products, details }}>
+    <ProductContext.Provider value={{ products, details, addCart, handleDetails }}>
       {props.children}
     </ProductContext.Provider>
   );

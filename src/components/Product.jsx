@@ -2,16 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useContext } from 'react';
+import { ProductContext } from "../contexts/ProductContext";
 
 const Product = ({ product }) => {
+  const { handleDetails, addCart } = useContext(ProductContext);
+  const { id } = product;
   return (
     <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
       <div className="card">
-        <div className="img-container p-5">
+        <div className="img-container p-5" onClick={() => handleDetails(id)}>
           <Link to="/details">
             <img src={product.img} alt="" className="card-img-top" />
           </Link>
           <button
+            onClick={() => addCart(id)}
             className="cart-btn" disabled={product.inCart ? true : false}>
             {product.inCart ? (
               <p className="text-capitalize mb-0" disabled>
