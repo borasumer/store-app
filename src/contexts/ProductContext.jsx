@@ -5,14 +5,14 @@ export const ProductContext = createContext();
 
 const ProductContextProvider = (props) => {
   const [products, setProducts] = useState(storeProducts);
-  const [detail, setDetail] = useState(detailProduct);
+  const [details, setDetails] = useState(detailProduct);
 
   let tempProducts = [];
 
-  storeProducts.map(item => {
+  storeProducts.forEach(item => {
     const singleItem = { ...item };
     tempProducts = [...tempProducts, singleItem];
-    return console.log('items are set')
+    //console.log('rendered')
   });
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const ProductContextProvider = (props) => {
   }, []);
 
   return (
-    <ProductContext.Provider value={{ products }}>
+    <ProductContext.Provider value={{ products, details }}>
       {props.children}
     </ProductContext.Provider>
   );
