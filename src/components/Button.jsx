@@ -11,6 +11,7 @@ padding: 0.2rem 0.5rem;
 cursor:pointer:
 margin: 0.2rem 0.5 rem;
 transition:all 0.5s ease-in-out;
+font-family: 'Oswald', sans-serif !important;
 &:hover{
   background: var(--lightBlue);
   color: var(--mainBlue);
