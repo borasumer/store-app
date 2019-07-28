@@ -6,7 +6,9 @@ import { ProductContext } from "../contexts/ProductContext";
 
 const Details = () => {
 
-  const { details, addCart } = useContext(ProductContext);
+  const { details, addCart, openModel, model } = useContext(ProductContext);
+  const { modelOpen } = model;
+
   const { id, company, img, info, price, title, inCart } = details;
 
 
@@ -54,7 +56,11 @@ const Details = () => {
               </Link>
             </div>
             <div className="ml-2">
-              <ButtonContainer cart onClick={() => addCart(id)} disabled={inCart ? true : false}>
+              <ButtonContainer cart onClick={() => {
+                addCart(id)
+                openModel(id)
+                //console.log(modelOpen)
+              }} disabled={inCart ? true : false}>
                 {inCart ? 'inCart' : 'add to cart'}
               </ButtonContainer>
             </div>

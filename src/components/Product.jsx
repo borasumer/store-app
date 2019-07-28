@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import { ProductContext } from "../contexts/ProductContext";
 
 const Product = ({ product }) => {
-  const { handleDetails, addCart } = useContext(ProductContext);
+  const { handleDetails, addCart, openModel } = useContext(ProductContext);
   const { id } = product;
   return (
     <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
@@ -16,7 +16,10 @@ const Product = ({ product }) => {
             <img src={product.img} alt="" className="card-img-top" />
           </Link>
           <button
-            onClick={() => addCart(id)}
+            onClick={() => {
+              addCart(id)
+              openModel(id)
+            }}
             className="cart-btn" disabled={product.inCart ? true : false}>
             {product.inCart ? (
               <p className="text-capitalize mb-0" disabled>
@@ -33,7 +36,6 @@ const Product = ({ product }) => {
             </h5>
           </div>
         </div>
-
       </div>
 
     </ProductWrapper >
