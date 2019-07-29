@@ -6,14 +6,12 @@ export const ProductContext = createContext();
 const ProductContextProvider = (props) => {
   const [products, setProducts] = useState(storeProducts);
   const [details, setDetails] = useState(detailProduct);
-  const [cart, setCart] = useState(
-
-    {
-      cartItems: storeProducts,
-      cartSubtotal: 0,
-      cartTax: 0,
-      cartTotal: 0
-    });
+  const [cart, setCart] = useState({
+    cartItems: [],
+    cartSubtotal: 0,
+    cartTax: 0,
+    cartTotal: 0
+  });
   const [model, setModel] = useState({
     modelProduct: detailProduct,
     modelOpen: false
@@ -67,7 +65,9 @@ const ProductContextProvider = (props) => {
     product.total = price;
     setProducts(tempProducts);
     setCart({ ...cart.cartItems, product });
+    console.log(cart.cartItems);
   }
+
 
   //! getItem Func - called in the handleDetails Func
   const getItem = (id) => {
