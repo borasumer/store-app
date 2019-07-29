@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import { ProductContext } from "../contexts/ProductContext";
 
 const Product = ({ product }) => {
-  const { handleDetails, addCart, openModel } = useContext(ProductContext);
+  const { handleDetails, addCart, openModel, addTotals } = useContext(ProductContext);
   const { id } = product;
   return (
     <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">

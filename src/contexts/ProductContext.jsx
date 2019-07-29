@@ -7,6 +7,16 @@ const ProductContextProvider = (props) => {
   const [products, setProducts] = useState(storeProducts);
   const [details, setDetails] = useState(detailProduct);
   const [cart, setCart] = useState([]);
+  const [cartValue, setCartValue] = useState({
+    cartSubTotal: 0,
+    cartTax: 0,
+    cartTotal: 0
+  });
+
+  useEffect(() => {
+    addTotals();
+  }, [details]);
+  console.log(cart)
   const [model, setModel] = useState({
     modelProduct: detailProduct,
     modelOpen: false
@@ -18,6 +28,19 @@ const ProductContextProvider = (props) => {
     const singleItem = { ...item };
     tempProducts = [...tempProducts, singleItem];
   });
+  //! Add Totals
+  const addTotals = () => {
+    let subTotal = 0;
+    cart.map(item => (subTotal += item.total));
+    const tempTax = subTotal * 0.1;
+    const tax = parseFloat(tempTax.toFixed(2));
+    const total = subTotal + tax;
+    setCartValue({
+      cartSubTotal: subTotal,
+      cartTax: tax,
+      cartTotal: total
+    });
+  }
   //! Increment Func for the Cart
   const increment = (id) => {
     console.log('this is increment method');
@@ -28,7 +51,10 @@ const ProductContextProvider = (props) => {
   }
   //! Remove item from the cart
   const removeItem = (id) => {
-    console.log('item removed');
+    const tempCart = [...cart];
+    const newCart = tempCart.filter(item => item.id !== id);
+    setCart([newCart]);
+    console.log('item removed')
   }
   //! Clear cart
   const clearCart = () => {
@@ -62,7 +88,6 @@ const ProductContextProvider = (props) => {
     setCart([...cart, product]);
   }
 
-
   //! getItem Func - called in the handleDetails Func
   const getItem = (id) => {
     const product = products.find(item => item.id === id);
@@ -74,15 +99,10 @@ const ProductContextProvider = (props) => {
     setDetails(product);
     //console.log(product);
   }
-  const testMe = () => {
-    console.log(cart)
-  }
-  useEffect(() => {
-    setProducts(tempProducts);
-  }, []);
+
 
   return (
-    <ProductContext.Provider value={{ products, cart, details, addCart, handleDetails, model, openModel, closeModel, increment, decrement, removeItem, clearCart, testMe }}>
+    <ProductContext.Provider value={{ products, cart, details, addCart, handleDetails, model, openModel, closeModel, increment, decrement, removeItem, clearCart, cartValue, addTotals }}>
       {props.children}
     </ProductContext.Provider>
   );

@@ -32,8 +32,8 @@ const CartItem = ({ item }) => {
         </div>
       </div>
       <div className="col-10 mx-auto col-lg-2">
-        <div className="card-icon" onClick={() => removeItem()}>
-          <i className="fas fa-trash"></i>
+        <div className="cart-icon" onClick={() => removeItem()}>
+          <i className="fas fa-trash" text-></i>
         </div>
       </div>
       <div className="col-10 mx-auto col-lg-2">
