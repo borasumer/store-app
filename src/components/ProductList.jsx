@@ -6,9 +6,10 @@ import Product from './Product';
 //import styled from "styled-components";
 
 const ProductList = () => {
-  const { products } = useContext(ProductContext);
+  const { products, testMe } = useContext(ProductContext);
   return (
     <React.Fragment>
+      <button onClick={() => testMe()}>Test me</button>
       <div className="container">
         <Title name="our" title="products" />
         <div className="row">

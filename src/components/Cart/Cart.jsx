@@ -9,9 +9,7 @@ import CartList from './CartList';
 const Cart = () => {
 
   const { cart } = useContext(ProductContext);
-  const { cartItems } = cart;
-  //console.log(cartItems.length)
-  return cartItems.length ? (
+  return cart.length ? (
     <React.Fragment>
       <Title name="Your" title="Cart" />
       <CartColumns />

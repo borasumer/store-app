@@ -6,12 +6,7 @@ export const ProductContext = createContext();
 const ProductContextProvider = (props) => {
   const [products, setProducts] = useState(storeProducts);
   const [details, setDetails] = useState(detailProduct);
-  const [cart, setCart] = useState({
-    cartItems: [],
-    cartSubtotal: 0,
-    cartTax: 0,
-    cartTotal: 0
-  });
+  const [cart, setCart] = useState([]);
   const [model, setModel] = useState({
     modelProduct: detailProduct,
     modelOpen: false
@@ -64,8 +59,7 @@ const ProductContextProvider = (props) => {
     const price = product.price;
     product.total = price;
     setProducts(tempProducts);
-    setCart({ ...cart.cartItems, product });
-    console.log(cart.cartItems);
+    setCart([...cart, product]);
   }
 
 
@@ -80,12 +74,15 @@ const ProductContextProvider = (props) => {
     setDetails(product);
     //console.log(product);
   }
+  const testMe = () => {
+    console.log(cart)
+  }
   useEffect(() => {
     setProducts(tempProducts);
   }, []);
 
   return (
-    <ProductContext.Provider value={{ products, cart, details, addCart, handleDetails, model, openModel, closeModel, increment, decrement, removeItem, clearCart }}>
+    <ProductContext.Provider value={{ products, cart, details, addCart, handleDetails, model, openModel, closeModel, increment, decrement, removeItem, clearCart, testMe }}>
       {props.children}
     </ProductContext.Provider>
   );

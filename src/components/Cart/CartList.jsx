@@ -4,10 +4,10 @@ import CartItem from './CartItem';
 
 const CartList = ({ cart }) => {
 
-  const { cartItems } = cart;
+  //const { cartItems } = cart;
   return (
     <div className="container-fluid">
-      {cartItems.map(item => {
+      {cart.map(item => {
         return (
           <CartItem key={item.id} item={item} />
         )
