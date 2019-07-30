@@ -7,7 +7,7 @@ import { ProductContext } from "../contexts/ProductContext";
 const Details = () => {
 
   const { details, addCart, openModel, model, addTotals } = useContext(ProductContext);
-  const { modelOpen } = model;
+  //const { modelOpen } = model;
 
   const { id, company, img, info, price, title, inCart } = details;
 
@@ -59,6 +59,7 @@ const Details = () => {
               <ButtonContainer cart onClick={() => {
                 addCart(id)
                 openModel(id)
+                //addTotals()
                 //console.log(modelOpen)
               }} disabled={inCart ? true : false}>
                 {inCart ? 'inCart' : 'add to cart'}

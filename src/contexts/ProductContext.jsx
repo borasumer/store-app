@@ -12,24 +12,29 @@ const ProductContextProvider = (props) => {
     cartTax: 0,
     cartTotal: 0
   });
-
+  //console.log('First', storeProducts);
   useEffect(() => {
     addTotals();
-  }, [details]);
-  console.log(cart)
+  }, [details.total]);
+  //console.log(details.tax)
+
   const [model, setModel] = useState({
     modelProduct: detailProduct,
     modelOpen: false
   });
 
-  let tempProducts = [];
+  // const setStore = () => {
+  //   let tempProducts = [];
+  //   storeProducts.forEach(item => {
+  //     const singleItem = { ...item };
+  //     tempProducts = [...tempProducts, singleItem];
+  //   });
+  //   setProducts(tempProducts);
+  // }
 
-  storeProducts.forEach(item => {
-    const singleItem = { ...item };
-    tempProducts = [...tempProducts, singleItem];
-  });
   //! Add Totals
   const addTotals = () => {
+    //console.log(cart);
     let subTotal = 0;
     cart.map(item => (subTotal += item.total));
     const tempTax = subTotal * 0.1;
@@ -43,22 +48,54 @@ const ProductContextProvider = (props) => {
   }
   //! Increment Func for the Cart
   const increment = (id) => {
-    console.log('this is increment method');
+    let tempCart = [...cart];
+    const selectedProduct = tempCart.find(item => item.id === id);
+    const index = tempCart.indexOf(selectedProduct);
+    const product = tempCart[index];
+
+    product.count = product.count + 1;
+    product.total = product.count * product.price;
+    setCart(tempCart);
   }
   //! Decrement Func for the Cart
   const decrement = (id) => {
-    console.log('this is decrement method');
+    let tempCart = [...cart];
+    const selectedProduct = tempCart.find(item => item.id === id);
+    const index = tempCart.indexOf(selectedProduct);
+    const product = tempCart[index];
+    product.count = product.count - 1;
+
+    if (product.count === 0) {
+      removeItem(id);
+    } else {
+      product.total = product.count * product.price;
+      setCart(tempCart);
+    }
+
   }
   //! Remove item from the cart
   const removeItem = (id) => {
-    const tempCart = [...cart];
-    const newCart = tempCart.filter(item => item.id !== id);
-    setCart([newCart]);
-    console.log('item removed')
+    let tempProducts = [...products];
+    let tempCart = [...cart];
+    tempCart = tempCart.filter(item => item.id !== id);
+
+    const index = tempProducts.indexOf(getItem(id));
+    let removedProduct = tempProducts[index];
+    //console.log(removedProduct);
+    removedProduct.inCart = false;
+    removedProduct.count = 0;
+    removedProduct.total = 0;
+    setCart([...tempCart]);
+    setProducts([...tempProducts]);
   }
   //! Clear cart
   const clearCart = () => {
-    console.log(' cart is cleared');
+    setCart([]);
+    setCartValue({
+      cartSubTotal: 0,
+      cartTax: 0,
+      cartTotal: 0
+    });
   }
   //! openModel Func
   const openModel = (id) => {
@@ -77,16 +114,26 @@ const ProductContextProvider = (props) => {
   }
   //! addCart Func
   const addCart = (id) => {
-    let tempProducts = [...products];
+    console.log('first', storeProducts)
+    let tempProducts = [...storeProducts];
     const index = tempProducts.indexOf(getItem(id));
-    const product = tempProducts[index];
-    product.inCart = true;
-    product.count = 1;
-    const price = product.price;
-    product.total = price;
-    setProducts(tempProducts);
-    setCart([...cart, product]);
+    const tempPro = tempProducts[index];
+    tempPro.inCart = true;
+    tempPro.count = 1;
+    const price = tempPro.price;
+    tempPro.total = price;
+    //setProducts(tempProducts);
+    setCart([...cart, tempPro]);
   }
+  const resStore = () => {
+    let tempProducts = [...storeProducts];
+    tempProducts.forEach(item => item.inCart = false)
+    //setProducts(tempProducts);
+    setProducts(tempProducts);
+    //console.log('Second', tempProducts);
+  }
+
+
 
   //! getItem Func - called in the handleDetails Func
   const getItem = (id) => {
@@ -102,7 +149,7 @@ const ProductContextProvider = (props) => {
 
 
   return (
-    <ProductContext.Provider value={{ products, cart, details, addCart, handleDetails, model, openModel, closeModel, increment, decrement, removeItem, clearCart, cartValue, addTotals }}>
+    <ProductContext.Provider value={{ resStore, products, cart, details, addCart, handleDetails, model, openModel, closeModel, increment, decrement, removeItem, clearCart, cartValue, addTotals }}>
       {props.children}
     </ProductContext.Provider>
   );

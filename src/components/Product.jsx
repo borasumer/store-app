@@ -19,6 +19,7 @@ const Product = ({ product }) => {
             onClick={() => {
               addCart(id)
               openModel(id)
+              //addTotals()
             }}
             className="cart-btn" disabled={product.inCart ? true : false}>
             {product.inCart ? (

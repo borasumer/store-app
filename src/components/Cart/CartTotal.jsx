@@ -2,18 +2,20 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom';
 import { ProductContext } from '../../contexts/ProductContext';
 
-const CartTotal = ({ cart }) => {
-  const { clearCart, cartValue } = useContext(ProductContext);
-
+const CartTotal = () => {
+  const { clearCart, cartValue, resStore } = useContext(ProductContext);
   const { cartSubTotal, cartTotal, cartTax } = cartValue;
-  console.log(cart)
+  //console.log(cartValue)
   return (
     <React.Fragment>
       <div className="container">
         <div className="row">
           <div className="col-10 mt-2 ml-sm-5 ml-md-auto col-sm-8 text-capitalize text-right">
             <Link to='/'>
-              <button className="btn btn-outline-danger text-uppercase mb-3 px-5" type="button" onClick={() => clearCart()}>
+              <button className="btn btn-outline-danger text-uppercase mb-3 px-5" type="button" onClick={() => {
+                clearCart();
+                resStore();
+              }}>
                 clear cart
             </button>
             </Link>
