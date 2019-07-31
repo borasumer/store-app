@@ -18,7 +18,7 @@ const Model = () => {
           <div className="row">
             <div id="model" className="col-8 mx-auto col-md-6 col-lg-4 text-center text-capitalize p-5">
               <h5>Item has added to the cart</h5>
-              <img className="img-fluid" src={img} alt="Model Image" />
+              <img className="img-fluid" src={img} alt="Model" />
               <h5>{title}</h5>
               <h5 className="text-muted">price: $ {price}</h5>
               <Link to="/">

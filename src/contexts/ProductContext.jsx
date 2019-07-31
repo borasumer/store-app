@@ -14,10 +14,25 @@ const ProductContextProvider = (props) => {
   });
   //console.log('First', storeProducts);
   useEffect(() => {
+    const addTotals = () => {
+      //console.log(cart);
+      let subTotal = 0;
+      cart.map(item => (subTotal += item.total));
+      const tempTax = subTotal * 0.1;
+      const tax = parseFloat(tempTax.toFixed(2));
+      const total = subTotal + tax;
+      setCartValue({
+        cartSubTotal: subTotal,
+        cartTax: tax,
+        cartTotal: total
+      });
+    }
     addTotals();
-  }, [details.total]);
+  }, [details.total, cart]);
   //console.log(details.tax)
-
+  // useEffect(() => {
+  //   setStore();
+  // }, [])
   const [model, setModel] = useState({
     modelProduct: detailProduct,
     modelOpen: false
@@ -30,6 +45,7 @@ const ProductContextProvider = (props) => {
   //     tempProducts = [...tempProducts, singleItem];
   //   });
   //   setProducts(tempProducts);
+  //   console.log('set')
   // }
 
   //! Add Totals
@@ -134,7 +150,6 @@ const ProductContextProvider = (props) => {
   }
 
 
-
   //! getItem Func - called in the handleDetails Func
   const getItem = (id) => {
     const product = products.find(item => item.id === id);
@@ -147,7 +162,7 @@ const ProductContextProvider = (props) => {
     //console.log(product);
   }
 
-
+  //console.log('hi')
   return (
     <ProductContext.Provider value={{ resStore, products, cart, details, addCart, handleDetails, model, openModel, closeModel, increment, decrement, removeItem, clearCart, cartValue, addTotals }}>
       {props.children}

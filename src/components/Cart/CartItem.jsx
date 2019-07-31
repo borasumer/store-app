@@ -42,7 +42,7 @@ const CartItem = ({ item }) => {
           removeItem(id)
           addTotals()
         }}>
-          <i className="fas fa-trash" text-></i>
+          <i className="fas fa-trash" ></i>
         </div>
       </div>
       <div className="col-10 mx-auto col-lg-2">

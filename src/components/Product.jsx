@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import { ProductContext } from "../contexts/ProductContext";
 
 const Product = ({ product }) => {
-  const { handleDetails, addCart, openModel, addTotals } = useContext(ProductContext);
+  const { handleDetails, addCart, openModel } = useContext(ProductContext);
   const { id } = product;
   return (
     <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
@@ -29,13 +29,13 @@ const Product = ({ product }) => {
                 <i className="fas fa-cart-plus" />
               )}
           </button>
-          <div className="card-footer d-flex justify-content-between">
-            <p className="align-self-center mb-0">{product.title}</p>
-            <h5 className="text-blue font-italic mb-0">
-              <span className="mr-1">$</span>
-              {product.price}
-            </h5>
-          </div>
+        </div>
+        <div className="card-footer d-flex justify-content-between">
+          <p className="align-self-center mb-0">{product.title}</p>
+          <h5 className="text-blue font-italic mb-0">
+            <span className="mr-1">$</span>
+            {product.price}
+          </h5>
         </div>
       </div>
 

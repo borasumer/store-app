@@ -6,7 +6,7 @@ import { ProductContext } from "../contexts/ProductContext";
 
 const Details = () => {
 
-  const { details, addCart, openModel, model, addTotals } = useContext(ProductContext);
+  const { details, addCart, openModel } = useContext(ProductContext);
   //const { modelOpen } = model;
 
   const { id, company, img, info, price, title, inCart } = details;
