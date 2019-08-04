@@ -5,7 +5,7 @@ import { ProductContext } from '../../contexts/ProductContext';
 
 const CartItem = ({ item }) => {
   const { increment, decrement, removeItem, addTotals } = useContext(ProductContext);
-  const { id, title, img, price, total, count } = item;
+  const { _id, title, img, price, total, count } = item;
   //console.log(increment)
   return (
     <div className="row my-2 text-capitalize text-center">
@@ -26,12 +26,12 @@ const CartItem = ({ item }) => {
         <div className="d-flex justify-content-center">
           <div>
             <span className="btn btn-black mx-1" onClick={() => {
-              decrement(id)
+              decrement(_id)
               addTotals()
             }}>-</span>
             <span className="btn btn-black mx-1" >{count}</span>
             <span className="btn btn-black mx-1" onClick={() => {
-              increment(id)
+              increment(_id)
               addTotals()
             }}>+</span>
           </div>
@@ -39,7 +39,7 @@ const CartItem = ({ item }) => {
       </div>
       <div className="col-10 mx-auto col-lg-2">
         <div className="cart-icon" onClick={() => {
-          removeItem(id)
+          removeItem(_id)
           addTotals()
         }}>
           <i className="fas fa-trash" ></i>

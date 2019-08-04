@@ -1,11 +1,14 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { storeProducts, detailProduct } from '../data';
+import { detailProduct } from '../data';
+import axios from 'axios';
+
+
 
 export const ProductContext = createContext();
 
 const ProductContextProvider = (props) => {
-  const [products, setProducts] = useState(storeProducts);
-  const [details, setDetails] = useState(detailProduct);
+  const [products, setProducts] = useState([]);
+  const [details, setDetails] = useState([]);
   const [cart, setCart] = useState([]);
   const [cartValue, setCartValue] = useState({
     cartSubTotal: 0,
@@ -13,9 +16,21 @@ const ProductContextProvider = (props) => {
     cartTotal: 0
   });
   //console.log('First', storeProducts);
+
+  useEffect(() => {
+    // axios.post('http://localhost:5000/products/add/', storeProducts)
+    //   .then(console.log('products are added to the database'))
+    //   .catch(err => console.log(err));
+    axios.get('http://localhost:5000/products/')
+      .then(response => {
+        response ? (setProducts(response.data)) : (console.log('there is no response'));
+      })
+      .catch(err => console.log(err));
+  }, []);
+
+
   useEffect(() => {
     const addTotals = () => {
-      //console.log(cart);
       let subTotal = 0;
       cart.map(item => (subTotal += item.total));
       const tempTax = subTotal * 0.1;
@@ -28,25 +43,13 @@ const ProductContextProvider = (props) => {
       });
     }
     addTotals();
-  }, [details.total, cart]);
-  //console.log(details.tax)
-  // useEffect(() => {
-  //   setStore();
-  // }, [])
+  }, [cart]);
+
   const [model, setModel] = useState({
     modelProduct: detailProduct,
     modelOpen: false
   });
 
-  // const setStore = () => {
-  //   let tempProducts = [];
-  //   storeProducts.forEach(item => {
-  //     const singleItem = { ...item };
-  //     tempProducts = [...tempProducts, singleItem];
-  //   });
-  //   setProducts(tempProducts);
-  //   console.log('set')
-  // }
 
   //! Add Totals
   const addTotals = () => {
@@ -63,9 +66,9 @@ const ProductContextProvider = (props) => {
     });
   }
   //! Increment Func for the Cart
-  const increment = (id) => {
+  const increment = (_id) => {
     let tempCart = [...cart];
-    const selectedProduct = tempCart.find(item => item.id === id);
+    const selectedProduct = tempCart.find(item => item._id === _id);
     const index = tempCart.indexOf(selectedProduct);
     const product = tempCart[index];
 
@@ -74,15 +77,15 @@ const ProductContextProvider = (props) => {
     setCart(tempCart);
   }
   //! Decrement Func for the Cart
-  const decrement = (id) => {
+  const decrement = (_id) => {
     let tempCart = [...cart];
-    const selectedProduct = tempCart.find(item => item.id === id);
+    const selectedProduct = tempCart.find(item => item._id === _id);
     const index = tempCart.indexOf(selectedProduct);
     const product = tempCart[index];
     product.count = product.count - 1;
 
     if (product.count === 0) {
-      removeItem(id);
+      removeItem(_id);
     } else {
       product.total = product.count * product.price;
       setCart(tempCart);
@@ -90,12 +93,12 @@ const ProductContextProvider = (props) => {
 
   }
   //! Remove item from the cart
-  const removeItem = (id) => {
+  const removeItem = (_id) => {
     let tempProducts = [...products];
     let tempCart = [...cart];
-    tempCart = tempCart.filter(item => item.id !== id);
+    tempCart = tempCart.filter(item => item._id !== _id);
 
-    const index = tempProducts.indexOf(getItem(id));
+    const index = tempProducts.indexOf(getItem(_id));
     let removedProduct = tempProducts[index];
     //console.log(removedProduct);
     removedProduct.inCart = false;
@@ -114,8 +117,8 @@ const ProductContextProvider = (props) => {
     });
   }
   //! openModel Func
-  const openModel = (id) => {
-    const product = getItem(id);
+  const openModel = (_id) => {
+    const product = getItem(_id);
     setModel({
       modelOpen: true,
       modelProduct: product
@@ -129,40 +132,35 @@ const ProductContextProvider = (props) => {
     })
   }
   //! addCart Func
-  const addCart = (id) => {
-    console.log('first', storeProducts)
-    let tempProducts = [...storeProducts];
-    const index = tempProducts.indexOf(getItem(id));
+  const addCart = (_id) => {
+    console.log('first', products)
+    let tempProducts = [...products];
+    const index = tempProducts.indexOf(getItem(_id));
     const tempPro = tempProducts[index];
     tempPro.inCart = true;
     tempPro.count = 1;
     const price = tempPro.price;
     tempPro.total = price;
-    //setProducts(tempProducts);
     setCart([...cart, tempPro]);
   }
   const resStore = () => {
-    let tempProducts = [...storeProducts];
+    let tempProducts = [...products];
     tempProducts.forEach(item => item.inCart = false)
-    //setProducts(tempProducts);
     setProducts(tempProducts);
-    //console.log('Second', tempProducts);
   }
 
 
   //! getItem Func - called in the handleDetails Func
-  const getItem = (id) => {
-    const product = products.find(item => item.id === id);
+  const getItem = (_id) => {
+    const product = products.find(item => item._id === _id);
     return product;
   }
   //! handleDetails Func
-  const handleDetails = (id) => {
-    const product = getItem(id);
+  const handleDetails = (_id) => {
+    const product = getItem(_id);
     setDetails(product);
-    //console.log(product);
   }
 
-  //console.log('hi')
   return (
     <ProductContext.Provider value={{ resStore, products, cart, details, addCart, handleDetails, model, openModel, closeModel, increment, decrement, removeItem, clearCart, cartValue, addTotals }}>
       {props.children}

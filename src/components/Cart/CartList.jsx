@@ -9,7 +9,7 @@ const CartList = ({ cart }) => {
     <div className="container-fluid">
       {cart.map(item => {
         return (
-          <CartItem key={item.id} item={item} />
+          <CartItem key={item._id} item={item} />
         )
       })}
 

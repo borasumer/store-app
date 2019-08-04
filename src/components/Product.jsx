@@ -7,18 +7,19 @@ import { ProductContext } from "../contexts/ProductContext";
 
 const Product = ({ product }) => {
   const { handleDetails, addCart, openModel } = useContext(ProductContext);
-  const { id } = product;
+  const { _id } = product;
+  //console.log('id', id);
   return (
     <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
       <div className="card">
-        <div className="img-container p-5" onClick={() => handleDetails(id)}>
+        <div className="img-container p-5" onClick={() => handleDetails(_id)}>
           <Link to="/details">
             <img src={product.img} alt="" className="card-img-top" />
           </Link>
           <button
             onClick={() => {
-              addCart(id)
-              openModel(id)
+              addCart(_id)
+              openModel(_id)
               //addTotals()
             }}
             className="cart-btn" disabled={product.inCart ? true : false}>
@@ -45,7 +46,7 @@ const Product = ({ product }) => {
 //! PropTypes
 Product.propTypes = {
   product: PropTypes.shape({
-    id: PropTypes.number,
+    _id: PropTypes.string,
     img: PropTypes.string,
     title: PropTypes.string,
     price: PropTypes.number,

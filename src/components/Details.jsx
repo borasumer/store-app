@@ -9,7 +9,7 @@ const Details = () => {
   const { details, addCart, openModel } = useContext(ProductContext);
   //const { modelOpen } = model;
 
-  const { id, company, img, info, price, title, inCart } = details;
+  const { _id, company, img, info, price, title, inCart } = details;
 
 
   return (
@@ -57,8 +57,8 @@ const Details = () => {
             </div>
             <div className="ml-2">
               <ButtonContainer cart onClick={() => {
-                addCart(id)
-                openModel(id)
+                addCart(_id)
+                openModel(_id)
                 //addTotals()
                 //console.log(modelOpen)
               }} disabled={inCart ? true : false}>
@@ -69,9 +69,6 @@ const Details = () => {
         </div>
       </div>
       {/*Product Info Row Ends*/}
-
-
-
     </div>
   );
 }

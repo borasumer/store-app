@@ -13,8 +13,10 @@ const ProductList = () => {
         <Title name="our" title="products" />
         <div className="row">
           {products.map(product => {
+            //console.log(product._id)
             return (
-              <Product product={product} key={product.id} />
+              <Product product={product} key={product._id} />
+
             )
           })}
         </div>
