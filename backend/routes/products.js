@@ -1,8 +1,8 @@
 const router = require('express').Router();
-
+const verify = require('./verifyToken');
 const Product = require('../models/product.model');
 
-router.route('/add').post((req, res) => {
+router.post('/add', (req, res) => {
   req.body.map(item => {
     const title = item.title;
     const img = item.img;
@@ -26,7 +26,15 @@ router.route('/add').post((req, res) => {
   })
 });
 
-router.route('/').get((req, res) => {
+router.get('/', (req, res) => {
+  Product.find()
+    .then(product => {
+      res.json(product);
+    })
+    .catch(err => console.log(err))
+});
+
+router.get('/cart', verify, (req, res) => {
   Product.find()
     .then(product => {
       res.json(product);
