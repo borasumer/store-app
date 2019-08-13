@@ -34,8 +34,8 @@ router.get('/', (req, res) => {
     .catch(err => console.log(err))
 });
 
-router.get('/cart', verify, (req, res) => {
-  Product.find()
+router.get('/user', (req, res) => {
+  User.find()
     .then(product => {
       res.json(product);
     })

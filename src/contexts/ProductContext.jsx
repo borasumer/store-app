@@ -3,9 +3,6 @@ import { detailProduct } from '../data';
 import axios from 'axios';
 
 
-
-
-
 export const ProductContext = createContext();
 
 const ProductContextProvider = (props) => {
@@ -23,7 +20,7 @@ const ProductContextProvider = (props) => {
     // axios.post('http://localhost:5000/products/add/', storeProducts)
     //   .then(console.log('products are added to the database'))
     //   .catch(err => console.log(err));
-    axios.get('http://localhost:5000/products/')
+    axios.get('http://localhost:5000/')
       .then(response => {
         response ? (setProducts(response.data)) : (console.log('there is no response'));
       })

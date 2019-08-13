@@ -11,6 +11,7 @@ import Cart from "./components/Cart/Cart";
 import Default from "./components/Default";
 import ProductContextProvider from "./contexts/ProductContext";
 import Model from "./components/Model";
+import Login from "./components/Login";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/details" component={Details} />
             <Route path="/cart" component={Cart} />
             <Route component={Default} />
+            <Route path="/login" component={Login} />
           </Switch>
           <Model />
         </Router>

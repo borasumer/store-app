@@ -23,7 +23,7 @@ app.use(express.json());
 
 //! Routes
 const productsRouter = require('./routes/products');
-app.use('/products', productsRouter);
+app.use('/', productsRouter);
 
 //! Auth route
 app.use('/user', authRoute);

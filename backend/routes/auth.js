@@ -14,7 +14,7 @@ router.post('/register', async (req, res) => {
 
   //Checking the user is already in the database
   const emailExist = await User.findOne({ email: req.body.email });
-  emailExist ? (res.status(400).send('Email already exists')) : (null);
+  if (emailExist) { (res.status(400).send('Email already exists')); }
 
   //Hash the password
   const salt = await bcrypt.genSalt(10);
@@ -39,15 +39,14 @@ router.post('/login', async (req, res) => {
   error ? (res.send(error.details[0].message)) : ('Logged in Successfully');
   //Checking the email is already in the database
   const user = await User.findOne({ email: req.body.email });
-  !user ? (res.status(400).send('Email does not exist')) : (null);
+  if (!user) { (res.status(400).send('Email does not exist')); }
   //Checking the password 
   const validPassword = await bcrypt.compare(req.body.password, user.password);
-  !validPassword ? (res.status(400).send('Invalid Password')) : (null);
+  if (!validPassword) { (res.status(400).send('Invalid Password')); }
 
   //Create an assign token
   const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
   res.header('auth-token', token).send(token);
 });
-
 
 module.exports = router;

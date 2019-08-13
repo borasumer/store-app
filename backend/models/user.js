@@ -17,6 +17,9 @@ const userSchema = new mongoose.Schema({
     required: true,
     min: 6,
     max: 1024
+  },
+  cart: {
+    type: Array
   }
 }, { timestamps: true });
 

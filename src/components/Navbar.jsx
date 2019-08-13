@@ -21,13 +21,22 @@ https://www.iconfinder.com/Makoto_msk */}
           </Link>
         </li>
       </ul>
-      <Link to="/cart" className="ml-auto">
-        <ButtonContainer>
-          <span className="mr-2">
-            <i className="fas fa-cart-plus"></i>my cart
+      <div className="ml-auto">
+        <Link to="/login" className="mr-auto">
+          <ButtonContainer>
+            <span className="mr-2">
+              <i className="fa fa-sign-in"></i>Login
           </span>
-        </ButtonContainer>
-      </Link>
+          </ButtonContainer>
+        </Link>
+        <Link to="/cart" className="mr-auto ml-2">
+          <ButtonContainer>
+            <span className="mr-2">
+              <i className="fas fa-cart-plus"></i>my cart
+          </span>
+          </ButtonContainer>
+        </Link>
+      </div>
     </NavWrapper>
   );
 }
