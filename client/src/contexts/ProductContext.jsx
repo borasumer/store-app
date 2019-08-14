@@ -21,7 +21,7 @@ const ProductContextProvider = (props) => {
     // axios.post('http://localhost:5000/products/add/', storeProducts)
     //   .then(console.log('products are added to the database'))
     //   .catch(err => console.log(err));
-    axios.get('https://phone-app-new.herokuapp.com/products/')
+    axios.get('https://phonestore-app.herokuapp.com/products/')
       .then(response => {
         response ? (setProducts(response.data)) : (console.log('there is no response'));
       })
